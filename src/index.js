@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import "bootswatch/dist/lux/bootstrap.min.css";
+
 import App from './App';
 import { Provider } from 'react-redux';
 import store from "./store"         //by default exports index.js file 
