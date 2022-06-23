@@ -2,26 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getUsers,getUser } from "../actions/usersAction";
 
 const usersReducer = createSlice({
-  name: "users",
+  name: "usersReducer",
   initialState: {
-    // users:[
-    //     {id:1,name:"Tushar"},   //this is user defined array
-    //     {id:2,name:"Shakil"},
-    //     {id:3,name:"Radhey"},
-
-    // ]
-
     users: [],
+    usersContainer:[],
     loader: false,
     errors: {},
     user: {},
   }, //This is how you define a function with an action and later export it
   //we will store normal actions in this reducer
   reducers: {
-    addUser: (state, action) => {
-      console.log(action);
-      state.users = [...state.users, action.payload];
-    },
+   filteredUsers:(state,action)=>{
+    state.users=state.usersContainer.filter(user=>user.name.toLowerCase().includes(action.payload));
+   }
   },
   //if we have to perform any asynchronous action for that we will use this
   extraReducers: {
@@ -32,6 +25,7 @@ const usersReducer = createSlice({
     [getUsers.fulfilled]: (state, action) => {
       state.loader = false;
       state.users = action.payload; //use payload as this data is available inside payload which has been fetched by the api
+      state.usersContainer=action.payload;
     },
     [getUsers.rejected]: (state, action) => {
       state.loader = false;
@@ -51,7 +45,7 @@ const usersReducer = createSlice({
   },
 });
 
-export const {addUser}=usersReducer.actions;
+export const {filteredUsers}=usersReducer.actions;
 
 
 

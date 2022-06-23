@@ -7,6 +7,7 @@ import { addUser } from "../store/reducer/usersReducer";
 import { getUsers } from "../store/actions/usersAction";
 import { useEffect } from "react";
 import Loader from "../components/Loader";
+import Filter from "../components/Filter";
 
 export default function Home() {
   // const state=useSelector((state)=>state.users)
@@ -33,33 +34,39 @@ export default function Home() {
   }, []);
 
   return !loader ? (
-    <table className="table table-hover">
-      <thead>
-        <tr>
-          <th>Sno.</th>
-          <th>Name</th>
-          <th>UserName</th>
-          <th>Email</th>
-          <th>Detail</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{user.name}</td>
-            <td>{user.username}</td>
-            <td>{user.email}</td>
-            <td>
-              <Link to={`/user/${user.id}`} className="btn btn-outline-success">
-                Details
-              </Link>
-            </td>
+    <>
+    <Filter/>
+      <table className="table table-hover">
+        <thead>
+          <tr>
+            <th>Sno.</th>
+            <th>Name</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Detail</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {users.map((user, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{user.name}</td>
+              <td>{user.username}</td>
+              <td>{user.email}</td>
+              <td>
+                <Link
+                  to={`/user/${user.id}`}
+                  className="btn btn-outline-success"
+                >
+                  Details
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   ) : (
-    <Loader/>
+    <Loader />
   );
 }
